@@ -53,7 +53,7 @@ HELOC = function(loan_amount = 100000, principal = 0, rate = 5, income = 1000, e
   # Outstanding principal of loan 
   outstanding_principal = loan_amount - principal
   # Monthly rate (convert rate to percentage and divide by 12)
-  daily_rate = rate / 100 / 365
+  daily_rate = rate / 100 / 365.25
 
   # Create a data frame for the HELOC schedule
   HELOC_table <- data.frame("date" = 0,
@@ -71,36 +71,34 @@ HELOC = function(loan_amount = 100000, principal = 0, rate = 5, income = 1000, e
     
     daily_income = ifelse(curr_day == income_pay_day, income, 0)
     daily_expenses = ifelse(curr_day == expenses_pay_day, expenses, 0)
-    outstanding_principal = outstanding_principal + daily_income - daily_expenses
+    outstanding_principal = outstanding_principal - daily_income + daily_expenses
     daily_interest = outstanding_principal * daily_rate
     
-    if(curr_day == interest_pay_day) {
-      monthly_interest = sum(HELOC_table$daily_interest[last_interest_pay_day:i-1])
+    if (curr_day == interest_pay_day) {
+      monthly_interest = sum(HELOC_table$daily_interest[last_interest_pay_day:i - 1])
       last_interest_pay_day = i
     }
     else {
       monthly_interest = 0
     }
     
-    outstanding_principal = outstanding_principal - monthly_interest
+    outstanding_principal = outstanding_principal + monthly_interest
     HELOC_table[i,] <- c(curr_date, daily_income, daily_expenses, daily_interest, monthly_interest, outstanding_principal)
     i = i + 1
-    print(HELOC_table)
-    print(curr_date)
-    print(i)
-    print(sum(HELOC_table$daily_interest[last_interest_pay_day:i-1]))
   }
   
   class(HELOC_table$date) <- "Date"
   
   View(HELOC_table)
+  View(filter(HELOC_table, day(HELOC_table$date) == 1))
 }
-HELOC()
+HELOC(loan_amount = 200000, principal = 0, rate = 4.5, income = 5000, expenses = 3000, start_date = as.Date("2023-01-01"), interest_pay_day = 1, income_pay_day = 1, expenses_pay_day = 1)
 
 
 
 
 
 # Thoughts:
-# Leap year -- does daily interest need to be 365.25?
 # Should we keep a running total of interest vs principal? 
+# Re-factor the code. You probably don't need a daily table Make a better monthly table. That should speed it up. 
+# Add the other options to the calculator
