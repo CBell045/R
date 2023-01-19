@@ -16,7 +16,6 @@ To do this, I created two functions in R, one to calculate mortgage payments, an
 
 Over the coming weeks, I will upload these functions to a web application using R Shiny and create visualizations to tell a story. R is particularly suited for this task because of its strength in data calculations, ease of graphing tools, and quick deployment of web apps. 
 
-{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running and a walkthrough of the code. Focus should be on sharing what you learned about the language syntax.}
 
 [Software Demo Video](https://www.youtube.com/watch?v=YT8jb3Ls2Es)
 
