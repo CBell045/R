@@ -1,5 +1,5 @@
 ---
-title: "R Heloc and Mortgage Calculators"
+title: "R HELOC and Mortgage Calculators"
 author: "Chad Bell"
 date: "January 19, 2023"
 output:
@@ -18,7 +18,7 @@ Over the coming weeks, I will upload these functions to a web application using 
 
 {Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running and a walkthrough of the code. Focus should be on sharing what you learned about the language syntax.}
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://www.youtube.com/watch?v=YT8jb3Ls2Es)
 
 # Development Environment
 

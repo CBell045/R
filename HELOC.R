@@ -66,7 +66,7 @@ HELOC = function(loan_amount = 100000, principal = 0, rate = 5, income = 1000, e
   last_interest_pay_day = 1
   
   # Run until the loan has been paid off
-  while (outstanding_principal > 0) {
+  while (outstanding_principal >= 0) {
     # Calculate the current date and day of the month
     curr_date = start_date + days(i-1)
     curr_day = day(curr_date)
