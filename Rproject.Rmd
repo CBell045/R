@@ -1,6 +1,6 @@
 ---
-title: "CASE STUDY TITLE"
-author: "YOUR NAME"
+title: "R Heloc and Mortgage Calculators"
+author: "Chad Bell"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   html_document:  
@@ -8,39 +8,35 @@ output:
     toc: true
     toc_float: true
 ---
+# Overview
 
-```{r, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-```
- 
-```{r load_libraries, include=FALSE}
-# Use this R-Chunk to load all your libraries!
-#install.packages("tidyverse") # run this line once in console to get package
-library(tidyverse)
+Millions of Americans buy their home using a traditional mortgage. What they don't know is that this archaic bank loan makes most people pay for their home twice -- once in principal, and once in interest. The purpose of this project is to educate potential borrowers about the benefits of a HELOC or All-in-one loan. 
 
-```
+To do this, I created two functions in R, one to calculate mortgage payments, and one to calculate HELOC payments. These functions create data-frames that show a monthly breakdown of principal and interest, so that users can compare between the two loans. 
 
-```{r load_data}
-# Use this R-Chunk to import all your datasets!
+Over the coming weeks, I will upload these functions to a web application using R Shiny and create visualizations to tell a story. R is particularly suited for this task because of its strength in data calculations, ease of graphing tools, and quick deployment of web apps. 
 
-```
+{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running and a walkthrough of the code. Focus should be on sharing what you learned about the language syntax.}
 
-## Background
+[Software Demo Video](http://youtube.link.goes.here)
 
-_Place Task Background Here_
+# Development Environment
 
-## Data Wrangling
+To write this code I used R-Studio, an open source IDE for R. 
 
-```{r tidy_data}
-# Use this R-Chunk to clean & wrangle your data!
+Along with the R language, I used the dplyr (for case_when), tidyverse (for a variety of functions), and lubridate (for date/time data types) libraries. 
 
-```
+# Useful Websites
 
-## Data Visualization
+I referred to the following websites during my work: 
 
-```{r plot_data}
-# Use this R-Chunk to plot & visualize your data!
+- [Mortgage Calculator](https://www.mortgagecalculator.org) This website helped me to check my work on the Mortgage Calculator once I was done. 
+- [HELOC Calculator](https://replaceyouruniversity.com/calculators/heloc-calculator/) This website helped me to check my work on the HELOC Calculator once I was done. 
 
-```
+# Future Work
 
-## Conclusions
+Here are future items that still need to be completed on this code: 
+
+- Keep a running total of interest vs principal. This will demonstrate which loan is better suited for a particular situation. 
+- Re-factor the code. Eliminate the daily table and clean up the montly table, perhaps using the aggregate function. 
+- Add the other options to the calculator, such as non-montly payments, additional expenses, and one-off bonuses. 
