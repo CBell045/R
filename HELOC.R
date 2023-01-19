@@ -1,6 +1,7 @@
 # R Mortgage and HELOC Calculators
 # Author: Chad Bell
-# Date: 1/16/23
+# Date: 1/12/23
+# Purpose: The purpose of these functions are to compare using a HELOC vs. a traditional mortgage to pay off your home. 
 
 # Import Libraries
 library(tidyverse)
@@ -40,8 +41,6 @@ mortgage = function(loan_amount = 100000, principal = 0, APR = 5, years = 30) {
   
   View(amort_table)
 }
-# Test value
-mortgage(loan_amount = 280000, APR = 4.87)
 
 #---------- End of Mortgage Calculator ----------
 
@@ -62,43 +61,52 @@ HELOC = function(loan_amount = 100000, principal = 0, rate = 5, income = 1000, e
                             "daily_interest" = 0,
                             "monthly_interest" = 0,
                             "balance" = 0)
+  # Counter variables
   i = 1
   last_interest_pay_day = 1
+  
+  # Run until the loan has been paid off
   while (outstanding_principal > 0) {
-    curr_date = start_date + days(i)
+    # Calculate the current date and day of the month
+    curr_date = start_date + days(i-1)
     curr_day = day(curr_date)
   
-    
+    # Calculate daily amounts and interest
     daily_income = ifelse(curr_day == income_pay_day, income, 0)
     daily_expenses = ifelse(curr_day == expenses_pay_day, expenses, 0)
     outstanding_principal = outstanding_principal - daily_income + daily_expenses
     daily_interest = outstanding_principal * daily_rate
     
+    # If the current day is the interest pay day, sum monthly interest and add to loan. 
     if (curr_day == interest_pay_day) {
       monthly_interest = sum(HELOC_table$daily_interest[last_interest_pay_day:i - 1])
       last_interest_pay_day = i
+      outstanding_principal = outstanding_principal + monthly_interest
     }
     else {
       monthly_interest = 0
     }
-    
-    outstanding_principal = outstanding_principal + monthly_interest
+    # Add the current day to the table
     HELOC_table[i,] <- c(curr_date, daily_income, daily_expenses, daily_interest, monthly_interest, outstanding_principal)
     i = i + 1
   }
-  
+  # Format date column correctly
   class(HELOC_table$date) <- "Date"
   
+  # View tables
   View(HELOC_table)
   View(filter(HELOC_table, day(HELOC_table$date) == 1))
 }
-HELOC(loan_amount = 200000, principal = 0, rate = 4.5, income = 5000, expenses = 3000, start_date = as.Date("2023-01-01"), interest_pay_day = 1, income_pay_day = 1, expenses_pay_day = 1)
+
+# Test values
+mortgage(loan_amount = 200000, APR = 4.5, years = 10)
+
+HELOC(loan_amount = 200000, principal = 0, rate = 4.5, income = 5000, expenses = 3000)
 
 
-
-
+print("Using a HELOC to replace your traditional mortgage could save you thousands of dollars in interest and pay off your home in 7-10 years.")
 
 # Thoughts:
-# Should we keep a running total of interest vs principal? 
-# Re-factor the code. You probably don't need a daily table Make a better monthly table. That should speed it up. 
+# Keep a running total of interest vs principal. 
+# Re-factor the code? You probably don't need a daily table. Make a better monthly table. That should speed it up. Use aggregate? 
 # Add the other options to the calculator
